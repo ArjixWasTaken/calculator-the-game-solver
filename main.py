@@ -1,4 +1,4 @@
-from typing import List, NamedTuple
+from typing import List, NamedTuple, Tuple, Union
 from enum import Enum, auto
 from itertools import product
 
@@ -10,16 +10,20 @@ class Operator(Enum):
     multiplication = auto()
     pop = auto()
     insert = auto()
+    convert = auto()
 
 
 class Token(NamedTuple):
-    value: str
+    value: Union[int, Tuple[int, int]]
     operation: Operator
 
     def __repr__(self):
-        symbol = "*" if self.operation == Operator.multiplication else ("-" if self.operation == Operator.subtraction else (
-            "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else ""))
-        return f"{symbol}{self.value if self.value != None else ''}"
+        if self.operation == Operator.convert:
+            return "{} => {}".format(*self.value)
+        else:
+            symbol = "*" if self.operation == Operator.multiplication else ("-" if self.operation == Operator.subtraction else (
+                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else ""))
+            return f"{symbol}{self.value if self.value != None else ''}"
 
 
 def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[Token]]:
@@ -64,6 +68,11 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
             elif token.operation == Operator.insert:
                 used.append(token)
                 begin = int(f"{begin if begin != 0 else ''}{token.value}")
+            elif token.operation == Operator.convert:
+                used.append(token)
+                begin = int(str(begin).replace(
+                    str(token.value[0]), str(token.value[1]))
+                )
 
             if begin == goal:
                 solved = True
@@ -171,5 +180,67 @@ level_twenty_three = solve(10, 4, 15, [
     Token(2, Operator.addition),
     Token(5, Operator.division)
 ])
-
-print(level_twenty_three)
+level_twenty_four = solve(210, 5, 0, [
+    Token(5, Operator.addition),
+    Token(5, Operator.subtraction),
+    Token(5, Operator.insert),
+    Token(2, Operator.insert),
+])
+level_twenty_five = solve(2020, 4, 40, [
+    Token(0, Operator.insert),
+    Token(4, Operator.addition),
+    Token(2, Operator.division),
+])
+level_twenty_six = solve(11, 4, 0, [
+    Token(12, Operator.insert),
+    Token(None, Operator.pop)
+])
+level_twenty_seven = solve(102, 4, 0, [
+    Token(10, Operator.insert),
+    Token(1, Operator.addition),
+    Token(None, Operator.pop)
+])
+level_twenty_eight = solve(222, 4, 0, [
+    Token(1, Operator.insert),
+    Token((1, 2), Operator.convert)
+])
+level_twenty_nine = solve(93, 4, 0, [
+    Token(6, Operator.addition),
+    Token(7, Operator.multiplication),
+    Token((6, 9), Operator.convert)
+])
+level_thirty = solve(2321, 6, 0, [
+    Token(1, Operator.insert),
+    Token(2, Operator.insert),
+    Token((1, 2), Operator.convert),
+    Token((2, 3), Operator.convert),
+])
+level_thirty_one = solve(24, 5, 0, [
+    Token(9, Operator.addition),
+    Token(2, Operator.multiplication),
+    Token((8, 4), Operator.convert)
+])
+level_thrity_two = solve(29, 5, 11, [
+    Token(2, Operator.division),
+    Token(3, Operator.addition),
+    Token((1, 2), Operator.convert),
+    Token((2, 9), Operator.convert),
+])
+level_thirty_three = solve(20, 5, 36, [
+    Token(3, Operator.addition),
+    Token(3, Operator.division),
+    Token((1, 2), Operator.convert)
+])
+level_thirty_four = solve(15, 4, 2, [
+    Token(3, Operator.division),
+    Token(1, Operator.insert),
+    Token(2, Operator.multiplication),
+    Token((4, 5), Operator.convert)
+])
+level_thirty_five = solve(414, 4, 1234, [
+    Token((23, 41), Operator.convert),
+    Token((24, 14), Operator.convert),
+    Token((12, 24), Operator.convert),
+    Token((14, 2), Operator.convert)
+])
+print(level_thirty_five)
