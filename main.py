@@ -9,6 +9,7 @@ class Operator(Enum):
     division = auto()
     multiplication = auto()
     pop = auto()
+    insert = auto()
 
 
 class Token(NamedTuple):
@@ -17,7 +18,7 @@ class Token(NamedTuple):
 
     def __repr__(self):
         symbol = "*" if self.operation == Operator.multiplication else ("-" if self.operation == Operator.subtraction else (
-            "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<"))
+            "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else ""))
         return f"{symbol}{self.value if self.value != None else ''}"
 
 
@@ -44,7 +45,9 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                 used.append(token)
             elif token.operation == Operator.division:
                 used.append(token)
-                begin /= token.value
+                if token.value > begin:
+                    break
+                begin = int(begin / token.value)
             elif token.operation == Operator.multiplication:
                 used.append(token)
                 begin *= token.value
@@ -58,6 +61,9 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                     begin = int(new_begin)
                 else:
                     begin = 0
+            elif token.operation == Operator.insert:
+                used.append(token)
+                begin = int(f"{begin if begin != 0 else ''}{token.value}")
 
             if begin == goal:
                 solved = True
@@ -128,3 +134,42 @@ level_fourteen = solve(21, 5, 0, [
     Token(3, Operator.multiplication),
     Token(5, Operator.multiplication)
 ])
+level_fifteen = solve(50, 3, 10, [
+    Token(3, Operator.multiplication),
+    Token(2, Operator.multiplication),
+    Token(5, Operator.subtraction)
+])
+level_sixteen = solve(2, 5, 0, [
+    Token(None, Operator.pop),
+    Token(4, Operator.addition),
+    Token(9, Operator.multiplication)
+])
+level_seventeen = solve(11, 2, 0, [Token(1, Operator.insert)])
+level_eighteen = solve(101, 3, 0, [
+    Token(1, Operator.insert),
+    Token(0, Operator.insert)
+])
+level_nineteen = solve(44, 3, 0, [
+    Token(2, Operator.insert),
+    Token(2, Operator.multiplication)
+])
+level_twenty = solve(35, 2, 0, [
+    Token(3, Operator.addition),
+    Token(5, Operator.insert)
+])
+level_twenty_one = solve(56, 3, 0, [
+    Token(1, Operator.insert),
+    Token(5, Operator.addition)
+])
+level_twenty_two = solve(9, 4, 0, [
+    Token(2, Operator.addition),
+    Token(3, Operator.division),
+    Token(1, Operator.insert)
+])
+level_twenty_three = solve(10, 4, 15, [
+    Token(0, Operator.insert),
+    Token(2, Operator.addition),
+    Token(5, Operator.division)
+])
+
+print(level_twenty_three)
