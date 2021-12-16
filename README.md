@@ -5,3 +5,8 @@ sadly for all of us I ended up playing "Calculator: The Game". <br />
 I really got into it, and I actually loved it, that's why I decided to write a calculator for the calculator game :) <br />
 
 Anyways, I haven't checked out the sequel yet, but if I do I will also include that.
+
+
+# Contributing
+You are free to add more levels from the game, just don't edit the solver, <br />
+mainly because I enjoy working on the solver.
