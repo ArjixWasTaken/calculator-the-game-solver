@@ -12,6 +12,7 @@ class Operator(Enum):
     insert = auto()
     convert = auto()
     square = auto()
+    switch = auto()
 
 
 class Token(NamedTuple):
@@ -23,7 +24,7 @@ class Token(NamedTuple):
             return "{} => {}".format(*self.value)
         else:
             symbol = "*" if self.operation == Operator.multiplication else ("-" if self.operation == Operator.subtraction else (
-                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else "^2" if self.operation == Operator.square else ""))
+                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else "^2" if self.operation == Operator.square else "+/-" if self.operation == Operator.switch else""))
             return f"{symbol}{self.value if self.value != None else ''}"
 
 
@@ -77,7 +78,9 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
             elif token.operation == Operator.square:
                 used.append(token)
                 begin **= 2
-
+            elif token.operation == Operator.switch:
+                used.append(token)
+                begin = -begin
             if begin == goal:
                 solved = True
                 break
@@ -267,4 +270,13 @@ level_thirty_nine = solve(144, 3, 0, [
     Token(2, Operator.insert),
     Token(None, Operator.square)
 ])
-print(level_thirty_nine)
+level_fourty = solve(5, 1, -5, [
+    Token(None, Operator.switch)
+])
+level_fourty_one = solve(-6, 3, 0, [
+    Token(4, Operator.addition),
+    Token(2, Operator.addition),
+    Token(None, Operator.switch)
+
+])
+print(level_fourty_one)
