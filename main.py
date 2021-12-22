@@ -11,6 +11,8 @@ class Operator(Enum):
     pop = auto()
     insert = auto()
     convert = auto()
+    exponential = auto()
+    switch = auto()
 
 
 class Token(NamedTuple):
@@ -22,7 +24,7 @@ class Token(NamedTuple):
             return "{} => {}".format(*self.value)
         else:
             symbol = "*" if self.operation == Operator.multiplication else ("-" if self.operation == Operator.subtraction else (
-                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else ""))
+                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else "^" if self.operation == Operator.exponential else "+/-" if self.operation == Operator.switch else""))
             return f"{symbol}{self.value if self.value != None else ''}"
 
 
@@ -73,7 +75,12 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                 begin = int(str(begin).replace(
                     str(token.value[0]), str(token.value[1]))
                 )
-
+            elif token.operation == Operator.exponential:
+                used.append(token)
+                begin **= token.value
+            elif token.operation == Operator.switch:
+                used.append(token)
+                begin = -begin
             if begin == goal:
                 solved = True
                 break
@@ -243,4 +250,33 @@ level_thirty_five = solve(414, 4, 1234, [
     Token((12, 24), Operator.convert),
     Token((14, 2), Operator.convert)
 ])
-print(level_thirty_five)
+level_thirty_six = solve(-85, 4, 0, [
+    Token(7, Operator.subtraction),
+    Token(6, Operator.addition),
+    Token(5, Operator.insert)
+])
+level_thirty_seven = solve(9, 3, 0, [
+    Token(1, Operator.subtraction),
+    Token(2, Operator.subtraction),
+    Token(2, Operator.exponential)
+])
+level_thirty_eight = solve(-120, 4, 0, [
+    Token(5, Operator.multiplication),
+    Token(6, Operator.subtraction),
+    Token(4, Operator.insert)
+])
+level_thirty_nine = solve(144, 3, 0, [
+    Token(1, Operator.subtraction),
+    Token(2, Operator.insert),
+    Token(2, Operator.exponential)
+])
+level_fourty = solve(5, 1, -5, [
+    Token(None, Operator.switch)
+])
+level_fourty_one = solve(-6, 3, 0, [
+    Token(4, Operator.addition),
+    Token(2, Operator.addition),
+    Token(None, Operator.switch)
+
+])
+print(level_thirty_nine)
