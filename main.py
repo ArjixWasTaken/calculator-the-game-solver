@@ -11,7 +11,7 @@ class Operator(Enum):
     pop = auto()
     insert = auto()
     convert = auto()
-    square = auto()
+    exponential = auto()
     switch = auto()
 
 
@@ -24,7 +24,7 @@ class Token(NamedTuple):
             return "{} => {}".format(*self.value)
         else:
             symbol = "*" if self.operation == Operator.multiplication else ("-" if self.operation == Operator.subtraction else (
-                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else "^2" if self.operation == Operator.square else "+/-" if self.operation == Operator.switch else""))
+                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else "^" if self.operation == Operator.exponential else "+/-" if self.operation == Operator.switch else""))
             return f"{symbol}{self.value if self.value != None else ''}"
 
 
@@ -75,9 +75,9 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                 begin = int(str(begin).replace(
                     str(token.value[0]), str(token.value[1]))
                 )
-            elif token.operation == Operator.square:
+            elif token.operation == Operator.exponential:
                 used.append(token)
-                begin **= 2
+                begin **= token.value
             elif token.operation == Operator.switch:
                 used.append(token)
                 begin = -begin
@@ -258,7 +258,7 @@ level_thirty_six = solve(-85, 4, 0, [
 level_thirty_seven = solve(9, 3, 0, [
     Token(1, Operator.subtraction),
     Token(2, Operator.subtraction),
-    Token(None, Operator.square)
+    Token(2, Operator.exponential)
 ])
 level_thirty_eight = solve(-120, 4, 0, [
     Token(5, Operator.multiplication),
@@ -268,7 +268,7 @@ level_thirty_eight = solve(-120, 4, 0, [
 level_thirty_nine = solve(144, 3, 0, [
     Token(1, Operator.subtraction),
     Token(2, Operator.insert),
-    Token(None, Operator.square)
+    Token(2, Operator.exponential)
 ])
 level_fourty = solve(5, 1, -5, [
     Token(None, Operator.switch)
@@ -279,4 +279,4 @@ level_fourty_one = solve(-6, 3, 0, [
     Token(None, Operator.switch)
 
 ])
-print(level_fourty_one)
+print(level_thirty_nine)
