@@ -257,4 +257,14 @@ level_thirty_seven = solve(9, 3, 0, [
     Token(2, Operator.subtraction),
     Token(None, Operator.square)
 ])
-print(level_thirty_seven)
+level_thirty_eight = solve(-120, 4, 0, [
+    Token(5, Operator.multiplication),
+    Token(6, Operator.subtraction),
+    Token(4, Operator.insert)
+])
+level_thirty_nine = solve(144, 3, 0, [
+    Token(1, Operator.subtraction),
+    Token(2, Operator.insert),
+    Token(None, Operator.square)
+])
+print(level_thirty_nine)
