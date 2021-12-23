@@ -1,4 +1,4 @@
-from typing import List, NamedTuple, Tuple, Union
+from typing import List, MutableMapping, NamedTuple, Tuple, Union
 from enum import Enum, auto
 from itertools import product
 
@@ -87,7 +87,9 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
 
         if solved:
             winning_patterns.append(used)
-
+    for seq, item in enumerate(winning_patterns):
+        if winning_patterns.count(item) > 1:
+            winning_patterns.pop(seq)
     return winning_patterns
 
 
@@ -277,6 +279,57 @@ level_fourty_one = solve(-6, 3, 0, [
     Token(4, Operator.addition),
     Token(2, Operator.addition),
     Token(None, Operator.switch)
-
 ])
-print(level_thirty_nine)
+level_fourty_two = solve(-13, 4, 0, [
+    Token(3, Operator.addition),
+    Token(7, Operator.subtraction),
+    Token(None, Operator.switch)
+])
+level_fourty_three = solve(60, 4, 0, [
+    Token(5, Operator.addition),
+    Token(10, Operator.subtraction),
+    Token(4, Operator.multiplication),
+    Token(None, Operator.switch)
+])
+level_fourty_four = solve(52, 5, 44, [
+    Token(9, Operator.addition),
+    Token(2, Operator.division),
+    Token(4, Operator.multiplication),
+    Token(None, Operator.switch)
+])
+level_fourty_five = solve(10, 5, 9, [
+    Token(5, Operator.addition),
+    Token(5, Operator.multiplication),
+    Token(None, Operator.switch)
+])
+level_fourty_six = solve(12, 5, 14, [
+    Token(6, Operator.insert),
+    Token(5, Operator.addition),
+    Token(8, Operator.division),
+    Token(None, Operator.switch)
+])
+level_fourty_seven = solve(13, 4, 55, [
+    Token(9, Operator.addition),
+    Token(None, Operator.switch),
+    Token(None, Operator.pop)
+])
+level_fourty_eight = solve(245, 5, 0, [
+    Token(3, Operator.subtraction),
+    Token(5, Operator.insert),
+    Token(4, Operator.multiplication),
+    Token(None, Operator.switch)
+])
+level_fourty_nine = solve(12, 4, 39, [
+    Token(-3, Operator.multiplication),
+    Token(3, Operator.division),
+    Token(9, Operator.addition),
+    Token(None, Operator.switch)
+])
+level_fifty = solve(126, 6, 111, [
+    Token(3, Operator.multiplication),
+    Token(9, Operator.subtraction),
+    Token(None, Operator.switch),
+    Token(None, Operator.switch),
+    Token(None, Operator.pop)
+])
+print(level_fifty)
