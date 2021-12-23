@@ -87,7 +87,9 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
 
         if solved:
             winning_patterns.append(used)
-
+    for seq, item in enumerate(winning_patterns):
+        if winning_patterns.count(item) > 1:
+            winning_patterns.pop(seq)
     return winning_patterns
 
 
