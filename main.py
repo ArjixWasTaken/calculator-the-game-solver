@@ -53,7 +53,11 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                 used.append(token)
                 if token.value > begin:
                     break
-                begin = int(begin / token.value)
+                print(type(begin/token.value))
+                if (begin/token.value).is_integer():
+                  begin = int(begin / token.value)
+                else:
+                  break
             elif token.operation == Operator.multiplication:
                 used.append(token)
                 begin *= token.value
@@ -329,7 +333,12 @@ level_fifty = solve(126, 6, 111, [
     Token(3, Operator.multiplication),
     Token(9, Operator.subtraction),
     Token(None, Operator.switch),
-    Token(None, Operator.switch),
     Token(None, Operator.pop)
 ])
-print(level_fifty)
+level_fifty_one = solve(3, 5, 34, [
+    Token(5, Operator.subtraction),
+    Token(8, Operator.addition),
+    Token(7, Operator.division),
+    Token(None, Operator.switch)
+])
+print(level_fifty_one)
