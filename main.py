@@ -53,7 +53,6 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                 used.append(token)
                 if token.value > begin:
                     break
-                print(type(begin/token.value))
                 if (begin/token.value).is_integer():
                   begin = int(begin / token.value)
                 else:
