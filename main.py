@@ -45,11 +45,9 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
             continue
 
         for token in possibility:
-            print(begin == goal)
             if begin == goal:
                 solved = True
                 break
-            #print(begin == goal)
             if token.operation == Operator.addition:
                 begin += token.value
                 used.append(token)
@@ -89,17 +87,13 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                 used.append(token)
                 begin = -begin
             elif token.operation == Operator.reverse:
+                used.append(token)
                 begin = int(str(begin)[::-1])
-                # The regrets are mounting
-                #print(begin, goal) #True
-            if begin == goal: #False
+            if begin == goal:
                 solved = True
                 break
-            else:
-              print(begin == goal)
             
         if solved:
-            print(begin == goal)
             winning_patterns.append(used)
     for seq, item in enumerate(winning_patterns):
         if winning_patterns.count(item) > 1:
