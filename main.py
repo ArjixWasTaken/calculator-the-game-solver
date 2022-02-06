@@ -13,18 +13,20 @@ class Operator(Enum):
     convert = auto()
     exponential = auto()
     switch = auto()
-
+    reverse = auto()
 
 class Token(NamedTuple):
     value: Union[int, Tuple[int, int]]
     operation: Operator
 
     def __repr__(self):
+        #print(self.operation)
         if self.operation == Operator.convert:
             return "{} => {}".format(*self.value)
         else:
             symbol = "*" if self.operation == Operator.multiplication else ("-" if self.operation == Operator.subtraction else (
-                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else "^" if self.operation == Operator.exponential else "+/-" if self.operation == Operator.switch else""))
+                "+" if self.operation == Operator.addition else "/" if self.operation == Operator.division else "<<" if self.operation == Operator.pop else "^" if self.operation == Operator.exponential else "+/-" if self.operation == Operator.switch else "rev" if self.operation == Operator.reverse else ""))
+            
             return f"{symbol}{self.value if self.value != None else ''}"
 
 
@@ -43,9 +45,11 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
             continue
 
         for token in possibility:
+            print(begin == goal)
             if begin == goal:
                 solved = True
                 break
+            #print(begin == goal)
             if token.operation == Operator.addition:
                 begin += token.value
                 used.append(token)
@@ -84,11 +88,18 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
             elif token.operation == Operator.switch:
                 used.append(token)
                 begin = -begin
-            if begin == goal:
+            elif token.operation == Operator.reverse:
+                begin = int(str(begin)[::-1])
+                # The regrets are mounting
+                #print(begin, goal) #True
+            if begin == goal: #False
                 solved = True
                 break
-
+            else:
+              print(begin == goal)
+            
         if solved:
+            print(begin == goal)
             winning_patterns.append(used)
     for seq, item in enumerate(winning_patterns):
         if winning_patterns.count(item) > 1:
@@ -340,4 +351,15 @@ level_fifty_one = solve(3, 5, 34, [
     Token(7, Operator.division),
     Token(None, Operator.switch)
 ])
-print(level_fifty_one)
+level_fifty_two = solve(4, 5, 25, [
+    Token(4, Operator.subtraction),
+    Token(-4, Operator.multiplication),
+    Token(3, Operator.division),
+    Token(8, Operator.division),
+    Token(None, Operator.switch)
+])
+level_fifty_three = solve(21, 1, 12, [
+    Token(None, Operator.reverse)
+])
+
+print(level_fifty_three)
