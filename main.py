@@ -1,6 +1,8 @@
+from lib2to3.pgen2.token import OP
 from typing import List, MutableMapping, NamedTuple, Tuple, Union
 from enum import Enum, auto
 from itertools import product
+from webbrowser import Opera
 
 
 class Operator(Enum):
@@ -88,7 +90,10 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
                 begin = -begin
             elif token.operation == Operator.reverse:
                 used.append(token)
-                begin = int(str(begin)[::-1])
+                try:
+                    begin = int(str(begin)[::-1])
+                except ValueError as err:
+                    break
             if begin == goal:
                 solved = True
                 break
@@ -355,5 +360,38 @@ level_fifty_two = solve(4, 5, 25, [
 level_fifty_three = solve(21, 1, 12, [
     Token(None, Operator.reverse)
 ])
-
-print(level_fifty_three)
+level_fifty_four = solve(51, 3, 0, [
+    Token(6, Operator.addition),
+    Token(9, Operator.addition),
+    Token(None, Operator.reverse)
+])
+level_fifty_five = solve(101, 3, 100, [
+    Token(1, Operator.insert),
+    Token(9, Operator.addition),
+    Token(None, Operator.reverse),
+])
+level_fifty_six = solve(100, 4, 1101, [
+    Token(None, Operator.reverse),
+    Token(1, Operator.subtraction)
+])
+level_fifty_seven = solve(58, 4, 0, [
+    Token(4, Operator.addition),
+    Token(4, Operator.multiplication),
+    Token(3, Operator.subtraction),
+    Token(None, Operator.reverse)
+])
+level_fifty_eight = solve(4, 3, 6, [
+    Token(1, Operator.insert),
+    Token(4, Operator.division),
+    Token(None, Operator.reverse)
+])
+level_fifty_nine = solve(21, 3, 15, [
+    Token(9, Operator.addition),
+    Token(5, Operator.multiplication),
+    Token(None, Operator.reverse)
+])
+level_sixty = solve(13, 5, 100, [
+    Token(2, Operator.division),
+    Token(None, Operator.reverse)
+])
+print(level_sixty)
