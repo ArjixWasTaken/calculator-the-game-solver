@@ -27,9 +27,16 @@ returns a string of:
     pad = " "*4
 
     result = "[\n{}".format(pad * 4) + \
-        ((f",\n{pad*4}").join([f"Token({x.value}, {x.operation.name})" for x in results[0]])) + \
+        ((f",\n{pad*4}").join([f"Token({x.value}, Operator.{x.operation.name})" for x in results[0]])) + \
         "\n{}]".format(pad * 2)
 
     return "{}def test_level_9000000(self):\n{}{}level = {}\n".format(
         pad, pad, pad, level
     ) + ("{}self.assertTrue({} in level)".format(pad * 2, result))
+
+
+print(
+    get_test_for_level(
+        "solve(7, 4, 0, [Token(2, Operator.insert), Token(1, Operator.addition), Token(3, Operator.division), Token(None, Operator.reverse)])"
+    )
+)

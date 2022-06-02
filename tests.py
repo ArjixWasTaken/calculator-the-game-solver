@@ -770,6 +770,26 @@ class TestLevels(unittest.TestCase):
             Token(1, Operator.insert),
         ] in level)
 
+    def test_level_62(self):
+        level = solve(102, 4, 0, [Token(5, Operator.addition), Token(
+            4, Operator.multiplication), Token(10, Operator.insert), Token(None, Operator.reverse)])
+        self.assertTrue([
+            Token(5, Operator.addition),
+            Token(4, Operator.multiplication),
+            Token(10, Operator.insert),
+            Token(None, Operator.reverse)
+        ] in level)
+
+    def test_level_63(self):
+        level = solve(7, 4, 0, [Token(2, Operator.insert), Token(
+            1, Operator.addition), Token(3, Operator.division), Token(None, Operator.reverse)])
+        self.assertTrue([
+            Token(1, Operator.addition),
+            Token(2, Operator.insert),
+            Token(None, Operator.reverse),
+            Token(3, Operator.division)
+        ] in level)
+
 
 if __name__ == '__main__':
     unittest.main()
