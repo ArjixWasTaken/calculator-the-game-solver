@@ -1,4 +1,3 @@
-from lib2to3.pgen2.token import OP
 from typing import List, NamedTuple, Tuple, Union
 from enum import Enum, auto
 from itertools import product
