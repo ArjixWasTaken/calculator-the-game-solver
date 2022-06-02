@@ -31,7 +31,7 @@ class Token(NamedTuple):
 
 
 def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[Token]]:
-    possibilities = product(tokens, repeat=moves)
+    possibilities = [list(x) for x in product(tokens, repeat=moves)]
 
     winning_patterns = []
 
@@ -39,8 +39,10 @@ def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[T
         begin = start
         used = []
         solved = False
-        if possibility[0].operation in (Operator.multiplication, Operator.division) and begin == 0:
-            continue
+
+        while possibility and possibility[0].operation in (Operator.multiplication, Operator.division) and begin == 0:
+            # Should skip needless operations
+            possibility.pop(0)
 
         for token in possibility:
             if begin == goal:
