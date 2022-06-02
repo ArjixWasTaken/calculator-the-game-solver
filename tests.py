@@ -56,18 +56,6 @@ class TestLevels(unittest.TestCase):
         ] in level)
 
     def test_level_06(self):
-        level = solve(10, 4, 100, [
-            Token(3, Operator.addition),
-            Token(5, Operator.division)
-        ])
-        self.assertTrue([
-            Token(5, Operator.division),
-            Token(5, Operator.division),
-            Token(3, Operator.addition),
-            Token(3, Operator.addition),
-        ] in level)
-
-    def test_level_07(self):
         level = solve(40, 4, 0, [
             Token(2, Operator.addition),
             Token(4, Operator.multiplication)
@@ -77,6 +65,18 @@ class TestLevels(unittest.TestCase):
             Token(4, Operator.multiplication),
             Token(2, Operator.addition),
             Token(4, Operator.multiplication)
+        ] in level)
+
+    def test_level_07(self):
+        level = solve(10, 4, 100, [
+            Token(3, Operator.addition),
+            Token(5, Operator.division)
+        ])
+        self.assertTrue([
+            Token(5, Operator.division),
+            Token(5, Operator.division),
+            Token(3, Operator.addition),
+            Token(3, Operator.addition),
         ] in level)
 
     def test_level_08(self):
