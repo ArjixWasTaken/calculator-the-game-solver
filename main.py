@@ -394,4 +394,8 @@ level_sixty = solve(13, 5, 100, [
     Token(2, Operator.division),
     Token(None, Operator.reverse)
 ])
-print(level_sixty)
+level_sixty_one = solve(11011, 4, 10, [
+    Token(None, Operator.reverse),
+    Token(1, Operator.insert)
+])
+print(level_sixty_one)
