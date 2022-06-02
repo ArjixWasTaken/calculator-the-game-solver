@@ -32,7 +32,6 @@ class Token(NamedTuple):
 
 def solve(goal: int, moves: int, start: int, tokens: List[Token]) -> List[List[Token]]:
     possibilities = [list(x) for x in product(tokens, repeat=moves)]
-
     winning_patterns = []
 
     for possibility in possibilities:
